@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  mysql_container:
+    container_name: mysql_container
+    image: mysql
+    networks:
+      - NetworkTalentAcquisition
+    ports:
+      - "13306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD : JOSELE2015
+    volumes:
+      - MysqlTalentAcquisition:/var/lib/mysql
+      # postgres -> /var/lib/postgresql/data
+networks:
+  NetworkTalentAcquisition:
+volumes:
+  MysqlTalentAcquisition:

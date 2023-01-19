@@ -3,10 +3,23 @@ package com.example.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+@EntityListeners(AuditingEntityListener.class)
 //import lombok.Getter;
 //import lombok.Setter;
 //
@@ -16,7 +29,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name = "cliente", indexes = {
         @Index(name = "fk_cliente_persona1_idx", columnList = "persona_iidpersona")
 })
-
 public class Cliente implements Serializable{
 
 	private static final long serialVersionUID = 1L;

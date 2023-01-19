@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.model.Cliente;
 
+@Repository
 public interface IClienteRepo extends JpaRepository<Cliente, Integer>{
 
 }

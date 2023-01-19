@@ -6,7 +6,6 @@ public class MovimientoDAO {
 	
 	private Integer iIdMovimiento;
 	private String dtFecha;
-	private String tTipoMovimiento;  
 	private boolean bEstado;
 	private Date dtFechaCreacion;
 	private Integer iMovimiento;
@@ -17,7 +16,6 @@ public class MovimientoDAO {
 		super();
 		this.iIdMovimiento = iIdMovimiento;
 		this.dtFecha = dtFecha;
-		this.tTipoMovimiento = tTipoMovimiento;
 		this.bEstado = bEstado;
 		this.dtFechaCreacion = dtFechaCreacion;
 		this.iMovimiento=iMovimiento;
@@ -31,8 +29,6 @@ public class MovimientoDAO {
 	public void setiMovimiento(Integer iMovimiento) {
 		this.iMovimiento = iMovimiento;
 	}
-
-	
 	public Integer getiIdMovimiento() {
 		return iIdMovimiento;
 	}
@@ -44,12 +40,6 @@ public class MovimientoDAO {
 	}
 	public void setDtFecha(String dtFecha) {
 		this.dtFecha = dtFecha;
-	}
-	public String gettTipoMovimiento() {
-		return tTipoMovimiento;
-	}
-	public void settTipoMovimiento(String tTipoMovimiento) {
-		this.tTipoMovimiento = tTipoMovimiento;
 	}
 	public boolean isbEstado() {
 		return bEstado;
