@@ -83,7 +83,28 @@ public class ClienteServiceImpl implements IClienteService  {
 	@Override
 	public Cliente updateCliente(ClienteDAO updatedCliente) {
 		// TODO Auto-generated method stub
-		return null;
+		Optional<Cliente> Result;
+    	Cliente clienteUpdate=new Cliente();
+    	Persona persona;   	
+    	MessageStatus messageStatus;
+    	
+    		Result=iClienteRepo.findById(updatedCliente.getiIdCliente());
+    		if(Result.orElse(null)==null) {
+    			clienteUpdate=Result.get();
+	    		if(updatedCliente.getiIdCliente()==clienteUpdate.getiIdCliente()) {
+		  			throw new IllegalArgumentException("El cliente no existe");
+		    	}
+    		}
+    		clienteUpdate=new Cliente();
+    		clienteUpdate.setbEstado        (updatedCliente.getbEstado());
+    		clienteUpdate.setDtFechaCreacion(new Date());
+    		clienteUpdate.settContrasena    (updatedCliente.gettContrasena());
+    		clienteUpdate.setiIdCliente     (updatedCliente.getiIdCliente());
+	    	persona=iPersonaRepo.findById(updatedCliente.getPersona_iidpersona()).get();
+	    	clienteUpdate.setPersona(persona);
+	    	clienteUpdate=(Cliente)iClienteRepo.save(clienteUpdate);
+    	
+		return clienteUpdate;
 	}
 
 	@Override

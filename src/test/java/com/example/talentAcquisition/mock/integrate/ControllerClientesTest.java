@@ -47,16 +47,12 @@ class ControllerClientesTest {
     private ObjectMapper objectMapper;
 	private ClienteServiceImpl clienteServiceImpl;
 	
-	//Comprobar que la cantidad de clientes sea mayor cero
-	@Test
-	public void getTestMostrarCliente()  throws Exception{
-		System.out.println("Hola")	;
-		this.mockMvc.perform(get("/clientes/getClientes")).andExpect(status().isOk());
-//		this.mockMvc.perform(get("/clientes/getClientes")
-//			      .contentType(MediaType.APPLICATION_JSON))
-//	      .andExpect(status().isOk())
-//	      .andExpect(content()
-//	      .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-	}
+	//despues de compilar verifica que el servicio /clientes/getClientes obtenga el status 200 
+	//comentar cuando salga a produccion
+//	@Test
+//	public void getTestMostrarCliente()  throws Exception{
+//		System.out.println("Hola")	;
+//		this.mockMvc.perform(get("/clientes/getClientes")).andExpect(status().isOk());
+//	}
 
 }

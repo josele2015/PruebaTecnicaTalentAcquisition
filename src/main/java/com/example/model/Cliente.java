@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,16 +16,15 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-@EntityListeners(AuditingEntityListener.class)
+//@EntityListeners(AuditingEntityListener.class)
 //import lombok.Getter;
 //import lombok.Setter;
 //
 //import lombok.AccessLevel;
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity(name = "cliente")
-@Table(name = "cliente", indexes = {
+@Table(name = "cliente", 
+	indexes = {
         @Index(name = "fk_cliente_persona1_idx", columnList = "persona_iidpersona")
 })
 public class Cliente implements Serializable{

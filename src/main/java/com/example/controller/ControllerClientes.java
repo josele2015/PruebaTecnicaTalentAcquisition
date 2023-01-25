@@ -61,8 +61,20 @@ public class ControllerClientes {
     public ResponseEntity<MessageStatus> putClientes( @RequestBody ClienteDAO clienteDAO){
     	Optional<Cliente> Result;
     	Cliente clienteUpdate=new Cliente();
-    	Persona persona;
+    	Persona persona;   	
     	MessageStatus messageStatus;
+    	try
+	    {
+    		clienteUpdate=clienteService.updateCliente(clienteDAO);
+    	}catch(Exception ex) {
+    		MessageError messageError=new MessageError(ex.getLocalizedMessage(),ex);
+    		messageStatus=new MessageStatus(HttpStatus.BAD_REQUEST,"Se disparo un error al momento de actualizar un nuevo cliente",messageError);
+    		return new ResponseEntity<MessageStatus>(messageStatus,HttpStatus.BAD_REQUEST);
+    	}
+    	messageStatus=new MessageStatus(HttpStatus.OK,"Se creo un nuevo cliente",null);
+    	return ResponseEntity.ok(messageStatus);
+    
+    	
 //    	try
 //	    {
 //    		Result=iClienteRepo.findById(clienteDAO.getiIdCliente());
@@ -87,26 +99,12 @@ public class ControllerClientes {
 //    		messageStatus=new MessageStatus(HttpStatus.BAD_REQUEST,"Se disparo un error al momento de actualizar un cliente",messageError);
 //    		return new ResponseEntity<MessageStatus>(messageStatus,HttpStatus.BAD_REQUEST);
 //    	}
-    	messageStatus=new MessageStatus(HttpStatus.OK,"Se actualizo un cliente",null);
-    	return ResponseEntity.ok(messageStatus);
     }
     
     @DeleteMapping("/deleteClientes/{id}")
     public ResponseEntity<MessageStatus> deleteClientes(@PathVariable("id")Integer id){
     	Optional<Cliente> Result;
     	MessageStatus messageStatus;
-//    	try {
-//    		Result=iClienteRepo.findById(id);
-//    		if(Result.orElse(null)==null) {
-//    			messageStatus=new MessageStatus(HttpStatus.BAD_REQUEST,"El cliente no existe",null);
-//        		return new ResponseEntity<MessageStatus>(messageStatus,HttpStatus.BAD_REQUEST);		
-//    		}
-//        	iClienteRepo.deleteById(id);
-//    	}catch(Exception ex) {
-//    		MessageError messageError=new MessageError(ex.getLocalizedMessage(),ex);
-//    		messageStatus=new MessageStatus(HttpStatus.BAD_REQUEST,"Se disparo un error al momento de eliminar un cliente",messageError);
-//    		return new ResponseEntity<MessageStatus>(messageStatus,HttpStatus.BAD_REQUEST);
-//    	}
     	messageStatus=new MessageStatus(HttpStatus.OK,"Se elimino el cliente con el id "+id,null);
     	return ResponseEntity.ok(messageStatus);
     }

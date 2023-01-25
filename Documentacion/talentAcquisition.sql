@@ -7,6 +7,11 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
+DROP TABLE IF EXISTS `PruebaTalentAcquisition`.`movimiento` ;
+DROP TABLE IF EXISTS `PruebaTalentAcquisition`.`cuenta` ;
+DROP TABLE IF EXISTS `PruebaTalentAcquisition`.`cliente` ;
+DROP TABLE IF EXISTS `PruebaTalentAcquisition`.`persona` ;
+DROP TABLE IF EXISTS `PruebaTalentAcquisition`.`entidad` ;
 -- -----------------------------------------------------
 -- Schema default_schema
 -- -----------------------------------------------------
@@ -22,25 +27,24 @@ CREATE SCHEMA IF NOT EXISTS `PruebaTalentAcquisition` DEFAULT CHARACTER SET utf8
 USE `PruebaTalentAcquisition` ;
 
 -- -----------------------------------------------------
--- Table `PruebaTalentAcquisition`.`Entidad`
+-- Table `PruebaTalentAcquisition`.`entidad`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `PruebaTalentAcquisition`.`Entidad` ;
+DROP TABLE IF EXISTS `PruebaTalentAcquisition`.`entidad` ;
 
-CREATE TABLE IF NOT EXISTS `PruebaTalentAcquisition`.`Entidad` (
-  `iIdEntidad` INT NOT NULL AUTO_INCREMENT,
-  `tNombreEntidad` VARCHAR(100) NOT NULL,
+CREATE TABLE IF NOT EXISTS `PruebaTalentAcquisition`.`entidad` (
+  `iIdentidad` INT NOT NULL AUTO_INCREMENT,
+  `tNombreentidad` VARCHAR(100) NOT NULL,
   `bEstado` BOOLEAN NOT NULL,
   `dtFechaCreacion` TIMESTAMP(3) NOT NULL,
-  PRIMARY KEY (`iIdEntidad`))
+  PRIMARY KEY (`iIdentidad`))
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
--- Table `PruebaTalentAcquisition`.`Persona`
+-- Table `PruebaTalentAcquisition`.`persona`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `PruebaTalentAcquisition`.`Persona` ;
+DROP TABLE IF EXISTS `PruebaTalentAcquisition`.`persona` ;
 
-CREATE TABLE IF NOT EXISTS `PruebaTalentAcquisition`.`Persona` (
+CREATE TABLE IF NOT EXISTS `PruebaTalentAcquisition`.`persona` (
   `iIdpersona` INT NOT NULL AUTO_INCREMENT,
   `tNombre` VARCHAR(100) NOT NULL,
   `tGenero` VARCHAR(1) NOT NULL,
@@ -48,82 +52,82 @@ CREATE TABLE IF NOT EXISTS `PruebaTalentAcquisition`.`Persona` (
   `tIdentificacion` VARCHAR(45) NOT NULL,
   `tDireccion` VARCHAR(100) NOT NULL,
   `tTelefono` VARCHAR(45) NOT NULL,
-  `Entidad_iIdEntidad` INT NOT NULL,
+  `entidad_iIdentidad` INT NOT NULL,
   `bEstado` BOOLEAN NOT NULL,
   `dtFechaCreacion` TIMESTAMP(3) NOT NULL,
   PRIMARY KEY (`iIdpersona`),
-  INDEX `fk_Persona_Entidad1_idx` (`Entidad_iIdEntidad` ASC) VISIBLE,
-  CONSTRAINT `fk_Persona_Entidad1`
-    FOREIGN KEY (`Entidad_iIdEntidad`)
-    REFERENCES `PruebaTalentAcquisition`.`Entidad` (`iIdEntidad`)
+  INDEX `fk_persona_entidad1_idx` (`entidad_iIdentidad` ASC) VISIBLE,
+  CONSTRAINT `fk_persona_entidad1`
+    FOREIGN KEY (`entidad_iIdentidad`)
+    REFERENCES `PruebaTalentAcquisition`.`entidad` (`iIdentidad`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `PruebaTalentAcquisition`.`Cliente`
+-- Table `PruebaTalentAcquisition`.`cliente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `PruebaTalentAcquisition`.`Cliente` ;
+DROP TABLE IF EXISTS `PruebaTalentAcquisition`.`cliente` ;
 
-CREATE TABLE IF NOT EXISTS `PruebaTalentAcquisition`.`Cliente` (
-  `iIdCliente` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `PruebaTalentAcquisition`.`cliente` (
+  `iIdcliente` INT NOT NULL AUTO_INCREMENT,
   `tContrasena` VARCHAR(200) NOT NULL,
   `bEstado` BOOLEAN NOT NULL,
-  `Persona_iIdpersona` INT NOT NULL,
+  `persona_iIdpersona` INT NOT NULL,
   `dtFechaCreacion` TIMESTAMP(3) NOT NULL,
-  PRIMARY KEY (`iIdCliente`),
-  INDEX `fk_Cliente_Persona1_idx` (`Persona_iIdpersona` ASC) VISIBLE,
-  CONSTRAINT `fk_Cliente_Persona1`
-    FOREIGN KEY (`Persona_iIdpersona`)
-    REFERENCES `PruebaTalentAcquisition`.`Persona` (`iIdpersona`)
+  PRIMARY KEY (`iIdcliente`),
+  INDEX `fk_cliente_persona1_idx` (`persona_iIdpersona` ASC) VISIBLE,
+  CONSTRAINT `fk_cliente_persona1`
+    FOREIGN KEY (`persona_iIdpersona`)
+    REFERENCES `PruebaTalentAcquisition`.`persona` (`iIdpersona`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `PruebaTalentAcquisition`.`Cuenta`
+-- Table `PruebaTalentAcquisition`.`cuenta`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `PruebaTalentAcquisition`.`Cuenta` ;
+DROP TABLE IF EXISTS `PruebaTalentAcquisition`.`cuenta` ;
 
-CREATE TABLE IF NOT EXISTS `PruebaTalentAcquisition`.`Cuenta` (
-  `iIdCuenta` INT NOT NULL AUTO_INCREMENT,
-  `tNumeroCuenta` VARCHAR(45) NOT NULL,
-  `tTipoCuenta` VARCHAR(50) NOT NULL,
+CREATE TABLE IF NOT EXISTS `PruebaTalentAcquisition`.`cuenta` (
+  `iIdcuenta` INT NOT NULL AUTO_INCREMENT,
+  `tNumerocuenta` VARCHAR(45) NOT NULL,
+  `tTipocuenta` VARCHAR(50) NOT NULL,
   `iSaldoInicial` INT NOT NULL,
   `bEstado` BOOLEAN NOT NULL,
   `dtFechaCreacion` TIMESTAMP(3) NOT NULL,
   `iSaldo` INT NOT NULL,
-  `Cliente_iIdCliente` INT NOT NULL,
-  PRIMARY KEY (`iIdCuenta`),
-  INDEX `fk_Cuenta_Cliente1_idx` (`Cliente_iIdCliente` ASC) VISIBLE,
-  CONSTRAINT `fk_Cuenta_Cliente1`
-    FOREIGN KEY (`Cliente_iIdCliente`)
-    REFERENCES `PruebaTalentAcquisition`.`Cliente` (`iIdCliente`)
+  `cliente_iIdcliente` INT NOT NULL,
+  PRIMARY KEY (`iIdcuenta`),
+  INDEX `fk_cuenta_cliente1_idx` (`cliente_iIdcliente` ASC) VISIBLE,
+  CONSTRAINT `fk_cuenta_cliente1`
+    FOREIGN KEY (`cliente_iIdcliente`)
+    REFERENCES `PruebaTalentAcquisition`.`cliente` (`iIdcliente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `PruebaTalentAcquisition`.`Movimiento`
+-- Table `PruebaTalentAcquisition`.`movimiento`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `PruebaTalentAcquisition`.`Movimiento` ;
+DROP TABLE IF EXISTS `PruebaTalentAcquisition`.`movimiento` ;
 
-CREATE TABLE IF NOT EXISTS `PruebaTalentAcquisition`.`Movimiento` (
-  `iIdMovimiento` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `PruebaTalentAcquisition`.`movimiento` (
+  `iIdmovimiento` INT NOT NULL AUTO_INCREMENT,
   `dtFecha` VARCHAR(45) NOT NULL,
-  `iMovimiento` INT NOT NULL,
-  `tTipoMovimiento` VARCHAR(45) NOT NULL,
+  `imovimiento` INT NOT NULL,
+  `tTipomovimiento` VARCHAR(45) NOT NULL,
   `bEstado` BOOLEAN NOT NULL,
   `dtFechaCreacion` TIMESTAMP(3) NOT NULL,
-  `Cuenta_iIdCuenta` INT NOT NULL,
-  PRIMARY KEY (`iIdMovimiento`),
-  INDEX `fk_Movimiento_Cuenta1_idx` (`Cuenta_iIdCuenta` ASC) VISIBLE,
-  CONSTRAINT `fk_Movimiento_Cuenta1`
-    FOREIGN KEY (`Cuenta_iIdCuenta`)
-    REFERENCES `PruebaTalentAcquisition`.`Cuenta` (`iIdCuenta`)
+  `cuenta_iIdcuenta` INT NOT NULL,
+  PRIMARY KEY (`iIdmovimiento`),
+  INDEX `fk_movimiento_cuenta1_idx` (`cuenta_iIdcuenta` ASC) VISIBLE,
+  CONSTRAINT `fk_movimiento_cuenta1`
+    FOREIGN KEY (`cuenta_iIdcuenta`)
+    REFERENCES `PruebaTalentAcquisition`.`cuenta` (`iIdcuenta`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -134,7 +138,7 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
--- insert Entidad
+-- insert entidad
 -- -----------------------------------------------------
 -- insert Into entidad values(1,"Bancolombia",true);
 -- insert Into entidad values(2,"Bbva",true);
@@ -145,10 +149,10 @@ insert Into entidad(`tNombreEntidad`,`bEstado`,`dtFechaCreacion`) values("BBVA",
 insert Into entidad(`tNombreEntidad`,`bEstado`,`dtFechaCreacion`) values("Banco Pichincha",true,now());
 
 -- -----------------------------------------------------
--- insert Persona
+-- insert persona
 -- -----------------------------------------------------
 
--- insert Persona relacionado con bancolombia
+-- insert persona relacionado con bancolombia
 insert Into persona(`tNombre`,`tGenero`,`iEdad`,`tIdentificacion`,`tDireccion`,`tTelefono`,`Entidad_iIdEntidad`,`bEstado`,`dtFechaCreacion`) 
 values("Jose Lema","M",30,"101010101011","Otavalo sn y principal","098254785",1,true,now());
 
@@ -158,7 +162,7 @@ values("Marianela Montalvo","F",20,"101010101012","Amazonas y NNUU","097548965",
 insert Into persona(`tNombre`,`tGenero`,`iEdad`,`tIdentificacion`,`tDireccion`,`tTelefono`,`Entidad_iIdEntidad`,`bEstado`,`dtFechaCreacion`) 
 values("Juan Osorio ","M",40,"101010101013","13 junio y Equinoccial","098874587",1,true,now());
 
--- insert Persona relacionado con BBVA
+-- insert persona relacionado con BBVA
 insert Into persona(`tNombre`,`tGenero`,`iEdad`,`tIdentificacion`,`tDireccion`,`tTelefono`,`Entidad_iIdEntidad`,`bEstado`,`dtFechaCreacion`) 
 values("Jose Lema","M",30,"101010101011","Otavalo sn y principal","098254785",2,true,now());
 
@@ -168,7 +172,7 @@ values("Marianela Montalvo","F",20,"101010101012","Amazonas y NNUU","097548965",
 insert Into persona(`tNombre`,`tGenero`,`iEdad`,`tIdentificacion`,`tDireccion`,`tTelefono`,`Entidad_iIdEntidad`,`bEstado`,`dtFechaCreacion`) 
 values("Juan Osorio ","M",40,"101010101013","13 junio y Equinoccial","098874587",2,true,now());
 
--- insert Persona relacionado con el banco Pichincha
+-- insert persona relacionado con el banco Pichincha
 insert Into persona(`tNombre`,`tGenero`,`iEdad`,`tIdentificacion`,`tDireccion`,`tTelefono`,`Entidad_iIdEntidad`,`bEstado`,`dtFechaCreacion`) 
 values("Jose Lema","M",30,"101010101011","Otavalo sn y principal","098254785",3,true,now());
 
@@ -178,10 +182,7 @@ values("Marianela Montalvo","F",20,"101010101012","Amazonas y NNUU","097548965",
 insert Into persona(`tNombre`,`tGenero`,`iEdad`,`tIdentificacion`,`tDireccion`,`tTelefono`,`Entidad_iIdEntidad`,`bEstado`,`dtFechaCreacion`) 
 values("Juan Osorio ","M",40,"101010101013","13 junio y Equinoccial","098874587",3,true,now());
 
-select * from entidad;
-select * from persona;
-
-insert Into cliente(`tContrasena`,`bEstado`,`Persona_iIdpersona`,`dtFechaCreacion`) 
+insert Into cliente(`tContrasena`,`bEstado`,`persona_iIdpersona`,`dtFechaCreacion`) 
 values("123",true,1,now());
 
 SELECT CURTIME(3);

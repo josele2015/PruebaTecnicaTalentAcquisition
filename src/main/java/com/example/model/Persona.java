@@ -17,12 +17,11 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@EntityListeners(AuditingEntityListener.class)
+//@EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity(name = "persona")
-@Table(name = "persona", indexes = {
+@Table(name = "persona",  indexes = {
         @Index(name = "fk_persona_entidad1_idx", columnList = "entidad_iidentidad")
 })
 
